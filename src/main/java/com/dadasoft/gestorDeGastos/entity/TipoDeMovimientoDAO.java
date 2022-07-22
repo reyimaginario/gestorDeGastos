@@ -16,12 +16,12 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tipo_pago")
-public class TipoDePagoDAO {
+@Table(name = "tipo_movimiento")
+public class TipoDeMovimientoDAO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long tipoDePagoId;
+	private Long tipoDeMovimientoId;
 
-	private String tipoDePagoDesc;
+	private String tipoDeMovimientoDesc;
 }
