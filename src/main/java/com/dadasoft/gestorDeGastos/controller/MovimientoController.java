@@ -21,7 +21,7 @@ public class MovimientoController {
 	private IMovimientoService movimientoService;
 
 	@PostMapping
-	public ResponseEntity<MovimientoApi> agregarMovimiento(@RequestBody MovimientoApi request) {
+	public ResponseEntity<MovimientoApi> agregarMovimiento(@RequestBody MovimientoApi request) throws Exception {
 		MovimientoApi movimientoApi;
 		movimientoApi = movimientoService.agregarMovimiento(request);
 		return new ResponseEntity<>(movimientoApi, HttpStatus.CREATED);

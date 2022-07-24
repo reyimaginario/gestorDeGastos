@@ -8,6 +8,9 @@ import com.dadasoft.gestorDeGastos.entity.CategoriaDAO;
 import com.dadasoft.gestorDeGastos.entity.MovimientoDAO;
 import com.dadasoft.gestorDeGastos.entity.TipoDeMovimientoDAO;
 import com.dadasoft.gestorDeGastos.entity.TipoDePagoDAO;
+import com.dadasoft.gestorDeGastos.exception.CategoriaException;
+import com.dadasoft.gestorDeGastos.exception.TipoDeMovimientoException;
+import com.dadasoft.gestorDeGastos.exception.TipoDePagoException;
 import com.dadasoft.gestorDeGastos.repository.ICategoriaRepo;
 import com.dadasoft.gestorDeGastos.repository.IMovimientoRepo;
 import com.dadasoft.gestorDeGastos.repository.ITipoDeMovimientoRepo;
@@ -15,6 +18,7 @@ import com.dadasoft.gestorDeGastos.repository.ITipoDePagoRepo;
 import com.dadasoft.gestorDeGastos.service.IMovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,11 +38,10 @@ public class MovimientoServiceImpl implements IMovimientoService {
 	private ITipoDePagoRepo tipoDePagoRepo;
 
 	@Override
-	public MovimientoApi agregarMovimiento(MovimientoApi request) {
+	public MovimientoApi agregarMovimiento(MovimientoApi request) throws TipoDeMovimientoException, CategoriaException, TipoDePagoException {
 		MovimientoApi movimientoApi;
 		MovimientoDAO movimientoDAO;
 		movimientoDAO = prepararMovimiento(request);
-		// categoriaDAO.setCategoriaDesc(request.getCategoriaDesc());
 		movimientoApi = convert(movimientoRepo.save(movimientoDAO));
 		return movimientoApi;
 	}
@@ -52,25 +55,33 @@ public class MovimientoServiceImpl implements IMovimientoService {
 
 
 
-	private MovimientoDAO prepararMovimiento(MovimientoApi api) {
+	private MovimientoDAO prepararMovimiento(MovimientoApi api) throws TipoDeMovimientoException, CategoriaException, TipoDePagoException {
 		MovimientoDAO dao = new MovimientoDAO();
 
-		//fecha
 		LocalDate fecha = Optional.ofNullable(api.getFecha()).orElse(LocalDate.now());
 		dao.setFecha(fecha);
 
-		//categoria
-		// Optional<TipoDeMovimientoDAO> OpTipoDeMovimiento = Optional.ofNullable(tipoDeMovimientoRepo.findByTipoDeMovimientoDesc(api.getTipoDeMovimiento().getTipoDeMovimientoDesc()));
-		// TipoDeMovimientoDAO tipoDeMovimiento = OpTipoDeMovimiento.orElseThrow();
 		TipoDeMovimientoDAO tipoDeMovimiento = tipoDeMovimientoRepo.findByTipoDeMovimientoDesc(api.getTipoDeMovimiento().getTipoDeMovimientoDesc());
+		if (tipoDeMovimiento == null)
+			throw new TipoDeMovimientoException(TipoDeMovimientoException.TIPO_DE_MOVIMIENTO_NOT_FOUND_CODE,
+												TipoDeMovimientoException.TIPO_DE_MOVIMIENTO_NOT_FOUND_MSG + " (" + api.getTipoDeMovimiento().getTipoDeMovimientoDesc() + ")");
 		dao.setTipoDeMovimiento(tipoDeMovimiento);
 
 		CategoriaDAO categoria = categoriaRepo.findByCategoriaDesc(api.getCategoria().getCategoriaDesc());
+		if (categoria == null)
+			throw new CategoriaException(CategoriaException.CATEGORIA_NOT_FOUND_CODE,
+					CategoriaException.CATEGORIA_NOT_FOUND_MSG + " (" + api.getCategoria().getCategoriaDesc() + ")");
 		dao.setCategoria(categoria);
 
 		dao.setMonto(api.getMonto());
 
-		TipoDePagoDAO tipoDePago = tipoDePagoRepo.findByTipoDePagoDesc(api.getTipoDePago().getTipoDePagoDesc());
+		TipoDePagoDAO tipoDePago = null;
+		if (api.getTipoDePago() != null && StringUtils.hasText(api.getTipoDePago().getTipoDePagoDesc())) {
+			tipoDePago = tipoDePagoRepo.findByTipoDePagoDesc(api.getTipoDePago().getTipoDePagoDesc());
+			if (tipoDePago == null)
+				throw new TipoDePagoException(TipoDePagoException.TIPO_DE_PAGO_NOT_FOUND_CODE,
+						TipoDePagoException.TIPO_DE_PAGO_NOT_FOUND_MSG + " (" + api.getTipoDePago().getTipoDePagoDesc() + ")");
+		}
 		dao.setTipoDePago(tipoDePago);
 
 		dao.setNroCuota(api.getNroCuota());
@@ -96,8 +107,10 @@ public class MovimientoServiceImpl implements IMovimientoService {
 		api.setCategoria(categoriaApi);
 		api.setMonto(dao.getMonto());
 		TipoDePagoApi tipoDePagoApi = new TipoDePagoApi();
-		tipoDePagoApi.setTipoDePagoId(dao.getTipoDePago().getTipoDePagoId());
-		tipoDePagoApi.setTipoDePagoDesc(dao.getTipoDePago().getTipoDePagoDesc());
+		if (dao.getTipoDePago() != null) {
+			tipoDePagoApi.setTipoDePagoId(dao.getTipoDePago().getTipoDePagoId());
+			tipoDePagoApi.setTipoDePagoDesc(dao.getTipoDePago().getTipoDePagoDesc());
+		}
 		api.setTipoDePago(tipoDePagoApi);
 		api.setNroCuota(dao.getNroCuota());
 		api.setCantCuotas(dao.getCantCuotas());
