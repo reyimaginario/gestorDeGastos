@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICategoriaRepo extends JpaRepository<CategoriaDAO, Long> {
+	CategoriaDAO findByCategoriaDesc(String categoriaDesc);
 }

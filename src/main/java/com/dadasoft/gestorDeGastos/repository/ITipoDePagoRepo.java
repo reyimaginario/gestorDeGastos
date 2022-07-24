@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITipoDePagoRepo extends JpaRepository<TipoDePagoDAO, Long> {
+	TipoDePagoDAO findByTipoDePagoDesc(String tipoDePagoDesc);
 }
