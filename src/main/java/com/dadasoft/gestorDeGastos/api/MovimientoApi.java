@@ -1,5 +1,6 @@
 package com.dadasoft.gestorDeGastos.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,14 +12,15 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovimientoApi {
 
 	private Long movimientoId;
 	private LocalDate fecha;
-	private TipoDeMovimientoApi tipoDeMovimiento;
-	private CategoriaApi categoria;
+	private String tipoDeMovimiento;
+	private String categoria;
 	private Float monto;
-	private TipoDePagoApi tipoDePago;
+	private String tipoDePago;
 	private Integer nroCuota;
 	private Integer cantCuotas;
 	private String comentario;

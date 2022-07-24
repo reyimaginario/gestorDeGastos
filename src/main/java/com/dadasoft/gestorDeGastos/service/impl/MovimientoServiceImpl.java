@@ -4,10 +4,10 @@ import com.dadasoft.gestorDeGastos.api.CategoriaApi;
 import com.dadasoft.gestorDeGastos.api.MovimientoApi;
 import com.dadasoft.gestorDeGastos.api.TipoDeMovimientoApi;
 import com.dadasoft.gestorDeGastos.api.TipoDePagoApi;
-import com.dadasoft.gestorDeGastos.entity.CategoriaDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.CategoriaDAO;
 import com.dadasoft.gestorDeGastos.entity.MovimientoDAO;
-import com.dadasoft.gestorDeGastos.entity.TipoDeMovimientoDAO;
-import com.dadasoft.gestorDeGastos.entity.TipoDePagoDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDeMovimientoDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDePagoDAO;
 import com.dadasoft.gestorDeGastos.exception.CategoriaException;
 import com.dadasoft.gestorDeGastos.exception.TipoDeMovimientoException;
 import com.dadasoft.gestorDeGastos.exception.TipoDePagoException;
@@ -61,26 +61,26 @@ public class MovimientoServiceImpl implements IMovimientoService {
 		LocalDate fecha = Optional.ofNullable(api.getFecha()).orElse(LocalDate.now());
 		dao.setFecha(fecha);
 
-		TipoDeMovimientoDAO tipoDeMovimiento = tipoDeMovimientoRepo.findByTipoDeMovimientoDesc(api.getTipoDeMovimiento().getTipoDeMovimientoDesc());
+		TipoDeMovimientoDAO tipoDeMovimiento = tipoDeMovimientoRepo.findByDesc(api.getTipoDeMovimiento());
 		if (tipoDeMovimiento == null)
 			throw new TipoDeMovimientoException(TipoDeMovimientoException.TIPO_DE_MOVIMIENTO_NOT_FOUND_CODE,
-												TipoDeMovimientoException.TIPO_DE_MOVIMIENTO_NOT_FOUND_MSG + " (" + api.getTipoDeMovimiento().getTipoDeMovimientoDesc() + ")");
+												TipoDeMovimientoException.TIPO_DE_MOVIMIENTO_NOT_FOUND_MSG + " (" + api.getTipoDeMovimiento() + ")");
 		dao.setTipoDeMovimiento(tipoDeMovimiento);
 
-		CategoriaDAO categoria = categoriaRepo.findByCategoriaDesc(api.getCategoria().getCategoriaDesc());
+		CategoriaDAO categoria = categoriaRepo.findByDesc(api.getCategoria());
 		if (categoria == null)
 			throw new CategoriaException(CategoriaException.CATEGORIA_NOT_FOUND_CODE,
-					CategoriaException.CATEGORIA_NOT_FOUND_MSG + " (" + api.getCategoria().getCategoriaDesc() + ")");
+					CategoriaException.CATEGORIA_NOT_FOUND_MSG + " (" + api.getCategoria() + ")");
 		dao.setCategoria(categoria);
 
 		dao.setMonto(api.getMonto());
 
 		TipoDePagoDAO tipoDePago = null;
-		if (api.getTipoDePago() != null && StringUtils.hasText(api.getTipoDePago().getTipoDePagoDesc())) {
-			tipoDePago = tipoDePagoRepo.findByTipoDePagoDesc(api.getTipoDePago().getTipoDePagoDesc());
+		if (api.getTipoDePago() != null && StringUtils.hasText(api.getTipoDePago())) {
+			tipoDePago = tipoDePagoRepo.findByDesc(api.getTipoDePago());
 			if (tipoDePago == null)
 				throw new TipoDePagoException(TipoDePagoException.TIPO_DE_PAGO_NOT_FOUND_CODE,
-						TipoDePagoException.TIPO_DE_PAGO_NOT_FOUND_MSG + " (" + api.getTipoDePago().getTipoDePagoDesc() + ")");
+						TipoDePagoException.TIPO_DE_PAGO_NOT_FOUND_MSG + " (" + api.getTipoDePago() + ")");
 		}
 		dao.setTipoDePago(tipoDePago);
 
@@ -97,21 +97,22 @@ public class MovimientoServiceImpl implements IMovimientoService {
 		MovimientoApi api = new MovimientoApi();
 		api.setMovimientoId(dao.getMovimientoId());
 		api.setFecha(dao.getFecha());
-		TipoDeMovimientoApi tipoDeMovimientoApi = new TipoDeMovimientoApi();
-		tipoDeMovimientoApi.setTipoDeMovimientoId(dao.getTipoDeMovimiento().getTipoDeMovimientoId());
-		tipoDeMovimientoApi.setTipoDeMovimientoDesc(dao.getTipoDeMovimiento().getTipoDeMovimientoDesc());
-		api.setTipoDeMovimiento(tipoDeMovimientoApi);
-		CategoriaApi categoriaApi = new CategoriaApi();
-		categoriaApi.setCategoriaId(dao.getCategoria().getCategoriaId());
-		categoriaApi.setCategoriaDesc(dao.getCategoria().getCategoriaDesc());
-		api.setCategoria(categoriaApi);
+		// TipoDeMovimientoApi tipoDeMovimientoApi = new TipoDeMovimientoApi();
+		// tipoDeMovimientoApi.setTipoDeMovimientoId(dao.getTipoDeMovimiento().getId());
+		// tipoDeMovimientoApi.setTipoDeMovimientoDesc(dao.getTipoDeMovimiento().getDesc());
+		api.setTipoDeMovimiento(dao.getTipoDeMovimiento().getDesc());
+		// CategoriaApi categoriaApi = new CategoriaApi();
+		// categoriaApi.setCategoriaId(dao.getCategoria().getId());
+		// categoriaApi.setCategoriaDesc(dao.getCategoria().getDesc());
+		api.setCategoria(dao.getCategoria().getDesc());
 		api.setMonto(dao.getMonto());
-		TipoDePagoApi tipoDePagoApi = new TipoDePagoApi();
+		// TipoDePagoApi tipoDePagoApi = new TipoDePagoApi();
 		if (dao.getTipoDePago() != null) {
-			tipoDePagoApi.setTipoDePagoId(dao.getTipoDePago().getTipoDePagoId());
-			tipoDePagoApi.setTipoDePagoDesc(dao.getTipoDePago().getTipoDePagoDesc());
+			api.setTipoDePago(dao.getTipoDePago().getDesc());
 		}
-		api.setTipoDePago(tipoDePagoApi);
+		else {
+			api.setTipoDePago(null);
+		}
 		api.setNroCuota(dao.getNroCuota());
 		api.setCantCuotas(dao.getCantCuotas());
 		api.setComentario(dao.getComentario());

@@ -16,11 +16,20 @@ public class CategoriaServiceImpl implements ICategoriaService {
 	@Autowired
 	private ICategoriaRepo categoriaRepo;
 
+
+	@Override
+	public List<CategoriaApi> obtenerCategoriasHabilitadas() {
+		List<CategoriaApi> listCategoriesApi;
+		listCategoriesApi = convert(categoriaRepo.findByEnableTrue());
+		return listCategoriesApi;
+	}
+
 	@Override
 	public CategoriaApi agregarCategoria(CategoriaApi request) {
 		CategoriaApi categoriaApi;
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		categoriaDAO.setCategoriaDesc(request.getCategoriaDesc());
+		categoriaDAO.setDesc(request.getCategoriaDesc());
+		categoriaDAO.setEnable(true);
 		categoriaApi = convert(categoriaRepo.save(categoriaDAO));
 		return categoriaApi;
 	}
@@ -35,8 +44,8 @@ public class CategoriaServiceImpl implements ICategoriaService {
 
 	private CategoriaApi convert(CategoriaDAO dao) {
 		CategoriaApi api = new CategoriaApi();
-		api.setCategoriaId(dao.getCategoriaId());
-		api.setCategoriaDesc(dao.getCategoriaDesc());
+		api.setCategoriaId(dao.getId());
+		api.setCategoriaDesc(dao.getDesc());
 		return api;
 	}
 
