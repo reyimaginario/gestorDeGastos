@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITipoDeMovimientoRepo extends JpaRepository<TipoDeMovimientoDAO, Long> {
+	TipoDeMovimientoDAO findByTipoDeMovimientoDesc(String tipoDeMovimientoDesc);
 }
