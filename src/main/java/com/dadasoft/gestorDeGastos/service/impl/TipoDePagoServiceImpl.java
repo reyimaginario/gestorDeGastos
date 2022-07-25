@@ -1,7 +1,7 @@
 package com.dadasoft.gestorDeGastos.service.impl;
 
 import com.dadasoft.gestorDeGastos.api.TipoDePagoApi;
-import com.dadasoft.gestorDeGastos.entity.TipoDePagoDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDePagoDAO;
 import com.dadasoft.gestorDeGastos.repository.ITipoDePagoRepo;
 import com.dadasoft.gestorDeGastos.service.ITipoDePagoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,8 @@ public class TipoDePagoServiceImpl implements ITipoDePagoService {
 	public TipoDePagoApi agregarTipoDePago(TipoDePagoApi request) {
 		TipoDePagoApi tipoDePagoApi;
 		TipoDePagoDAO tipoDePagoDAO = new TipoDePagoDAO();
-		tipoDePagoDAO.setTipoDePagoDesc(request.getTipoDePagoDesc());
+		tipoDePagoDAO.setDesc(request.getTipoDePagoDesc());
+		tipoDePagoDAO.setEnable(true);
 		tipoDePagoApi = convert(tipoPagoRepo.save(tipoDePagoDAO));
 		return tipoDePagoApi;
 	}
@@ -35,8 +36,8 @@ public class TipoDePagoServiceImpl implements ITipoDePagoService {
 
 	private TipoDePagoApi convert(TipoDePagoDAO dao) {
 		TipoDePagoApi api = new TipoDePagoApi();
-		api.setTipoDePagoId(dao.getTipoDePagoId());
-		api.setTipoDePagoDesc(dao.getTipoDePagoDesc());
+		api.setTipoDePagoId(dao.getId());
+		api.setTipoDePagoDesc(dao.getDesc());
 		return api;
 	}
 	private List<TipoDePagoApi> convert(List<TipoDePagoDAO> listDAO) {

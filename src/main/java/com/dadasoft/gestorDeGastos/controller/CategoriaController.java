@@ -21,9 +21,9 @@ public class CategoriaController {
 	private ICategoriaService categoriaService;
 
 	@GetMapping
-	public ResponseEntity<List<CategoriaApi>> getAllCategories() {
+	public ResponseEntity<List<CategoriaApi>> obtenerCategoriasHabilitadas() {
 		List<CategoriaApi> listCategoriesApi;
-		listCategoriesApi = categoriaService.findAll();
+		listCategoriesApi = categoriaService.obtenerCategoriasHabilitadas();
 		return new ResponseEntity<>(listCategoriesApi, HttpStatus.OK);
 	}
 

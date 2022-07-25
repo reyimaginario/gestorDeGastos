@@ -1,5 +1,8 @@
 package com.dadasoft.gestorDeGastos.entity;
 
+import com.dadasoft.gestorDeGastos.entity.catalogo.CategoriaDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDeMovimientoDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDePagoDAO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +20,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
+
+/**
+ * <h2>MovimientoDAO</h2>
+ *
+ * <p>Clase destinada a mapear los movimientos</p>
+ */
 
 @Getter
 @Setter
