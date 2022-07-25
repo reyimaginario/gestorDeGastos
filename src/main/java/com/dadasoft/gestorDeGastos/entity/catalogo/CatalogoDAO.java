@@ -23,7 +23,7 @@ import javax.persistence.MappedSuperclass;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class Catalogo {
+public abstract class CatalogoDAO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
