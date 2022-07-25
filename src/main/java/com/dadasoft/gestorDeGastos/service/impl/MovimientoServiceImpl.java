@@ -94,16 +94,9 @@ public class MovimientoServiceImpl implements IMovimientoService {
 		MovimientoApi api = new MovimientoApi();
 		api.setMovimientoId(dao.getMovimientoId());
 		api.setFecha(dao.getFecha());
-		// TipoDeMovimientoApi tipoDeMovimientoApi = new TipoDeMovimientoApi();
-		// tipoDeMovimientoApi.setTipoDeMovimientoId(dao.getTipoDeMovimiento().getId());
-		// tipoDeMovimientoApi.setTipoDeMovimientoDesc(dao.getTipoDeMovimiento().getDesc());
 		api.setTipoDeMovimiento(dao.getTipoDeMovimiento().getDesc());
-		// CategoriaApi categoriaApi = new CategoriaApi();
-		// categoriaApi.setCategoriaId(dao.getCategoria().getId());
-		// categoriaApi.setCategoriaDesc(dao.getCategoria().getDesc());
 		api.setCategoria(dao.getCategoria().getDesc());
 		api.setMonto(dao.getMonto());
-		// TipoDePagoApi tipoDePagoApi = new TipoDePagoApi();
 		if (dao.getTipoDePago() != null) {
 			api.setTipoDePago(dao.getTipoDePago().getDesc());
 		}
