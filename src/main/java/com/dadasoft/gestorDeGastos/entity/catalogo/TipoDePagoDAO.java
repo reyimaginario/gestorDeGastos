@@ -23,6 +23,6 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "tipo_pago")
-public class TipoDePagoDAO extends Catalogo {
+public class TipoDePagoDAO extends CatalogoDAO {
 
 }

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoriaApi {
+public class TipoDeMovimientoApi {
 
-	private Long categoriaId;
-	private String categoriaDesc;
+	private Long tipoDeMovimientoId;
+	private String tipoDeMovimientoDesc;
 }
