@@ -1,11 +1,8 @@
 package com.dadasoft.gestorDeGastos.service.impl;
 
-import com.dadasoft.gestorDeGastos.api.CategoriaApi;
 import com.dadasoft.gestorDeGastos.api.MovimientoApi;
-import com.dadasoft.gestorDeGastos.api.TipoDeMovimientoApi;
-import com.dadasoft.gestorDeGastos.api.TipoDePagoApi;
-import com.dadasoft.gestorDeGastos.entity.catalogo.CategoriaDAO;
 import com.dadasoft.gestorDeGastos.entity.MovimientoDAO;
+import com.dadasoft.gestorDeGastos.entity.catalogo.CategoriaDAO;
 import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDeMovimientoDAO;
 import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDePagoDAO;
 import com.dadasoft.gestorDeGastos.exception.CategoriaException;

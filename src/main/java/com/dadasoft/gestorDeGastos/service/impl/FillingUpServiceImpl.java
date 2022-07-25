@@ -1,6 +1,5 @@
 package com.dadasoft.gestorDeGastos.service.impl;
 
-import com.dadasoft.gestorDeGastos.entity.MovimientoDAO;
 import com.dadasoft.gestorDeGastos.entity.catalogo.CategoriaDAO;
 import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDeMovimientoDAO;
 import com.dadasoft.gestorDeGastos.entity.catalogo.TipoDePagoDAO;
