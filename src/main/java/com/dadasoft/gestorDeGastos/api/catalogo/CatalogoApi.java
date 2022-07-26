@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CatalogoApi {
+public abstract class CatalogoApi {
 
 	private Long id;
 	private String desc;

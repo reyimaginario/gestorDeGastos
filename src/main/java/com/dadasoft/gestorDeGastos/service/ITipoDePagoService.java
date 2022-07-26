@@ -1,6 +1,6 @@
 package com.dadasoft.gestorDeGastos.service;
 
-import com.dadasoft.gestorDeGastos.api.TipoDePagoApi;
+import com.dadasoft.gestorDeGastos.api.catalogo.TipoDePagoApi;
 
 import java.util.List;
 

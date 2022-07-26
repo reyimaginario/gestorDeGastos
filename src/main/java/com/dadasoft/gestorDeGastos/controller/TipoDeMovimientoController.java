@@ -1,6 +1,6 @@
 package com.dadasoft.gestorDeGastos.controller;
 
-import com.dadasoft.gestorDeGastos.api.TipoDeMovimientoApi;
+import com.dadasoft.gestorDeGastos.api.catalogo.TipoDeMovimientoApi;
 import com.dadasoft.gestorDeGastos.service.ITipoDeMovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

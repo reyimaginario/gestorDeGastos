@@ -1,6 +1,6 @@
 package com.dadasoft.gestorDeGastos.controller;
 
-import com.dadasoft.gestorDeGastos.api.TipoDePagoApi;
+import com.dadasoft.gestorDeGastos.api.catalogo.TipoDePagoApi;
 import com.dadasoft.gestorDeGastos.service.ITipoDePagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
