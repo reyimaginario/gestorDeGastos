@@ -29,6 +29,13 @@ public class CategoriaServiceImpl implements ICategoriaService {
 	}
 
 	@Override
+	public List<CategoriaApi> findAll() {
+		List<CategoriaApi> listCategoriesApi;
+		listCategoriesApi = convert(categoriaRepo.findAll());
+		return listCategoriesApi;
+	}
+
+	@Override
 	public CategoriaApi agregarCategoria(CategoriaApi request) {
 		CategoriaApi categoriaApi;
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -36,13 +43,6 @@ public class CategoriaServiceImpl implements ICategoriaService {
 		categoriaDAO.setEnable(true);
 		categoriaApi = convert(categoriaRepo.save(categoriaDAO));
 		return categoriaApi;
-	}
-
-	@Override
-	public List<CategoriaApi> findAll() {
-		List<CategoriaApi> listCategoriesApi;
-		listCategoriesApi = convert(categoriaRepo.findAll());
-		return listCategoriesApi;
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class CategoriaServiceImpl implements ICategoriaService {
 	}
 
 	private CategoriaDAO buscarCategoria(Long id) throws CategoriaException {
-		Optional<CategoriaDAO> opCategoriaDA = categoriaRepo.findById(id);
-		CategoriaDAO categoriaDAO = opCategoriaDA.orElseThrow(() -> new CategoriaException(CategoriaException.CATEGORIA_NOT_FOUND_CODE,
+		Optional<CategoriaDAO> opCategoriaDAO = categoriaRepo.findById(id);
+		CategoriaDAO categoriaDAO = opCategoriaDAO.orElseThrow(() -> new CategoriaException(CategoriaException.CATEGORIA_NOT_FOUND_CODE,
 				CategoriaException.CATEGORIA_NOT_FOUND_MSG + " (" + id + ")"));
 		return categoriaDAO;
 	}
